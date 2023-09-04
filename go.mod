@@ -4,9 +4,10 @@ go 1.20
 
 require (
 	cosmossdk.io/errors v1.0.0
+	cosmossdk.io/math v1.1.2
 	github.com/CosmWasm/wasmd v0.31.0
 	github.com/cosmos/cosmos-proto v1.0.0-beta.3
-	github.com/cosmos/cosmos-sdk v0.47.4
+	github.com/cosmos/cosmos-sdk v0.47.5
 	github.com/cosmos/go-bip39 v1.0.0
 	github.com/cosmos/ibc-apps/middleware/packet-forward-middleware/v4 v4.1.0
 	github.com/cosmos/ibc-apps/modules/async-icq/v4 v4.1.0
@@ -46,7 +47,6 @@ require (
 
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect
-	cosmossdk.io/math v1.1.2 // indirect
 	github.com/4meepo/tagalign v1.3.2 // indirect
 	github.com/Abirdcfly/dupword v0.0.12 // indirect
 	github.com/Djarvur/go-err113 v0.1.0 // indirect
