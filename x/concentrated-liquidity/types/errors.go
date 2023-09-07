@@ -264,15 +264,9 @@ func (e TickNotFoundError) Error() string {
 }
 
 type PriceBoundError struct {
-<<<<<<< HEAD
 	ProvidedPrice osmomath.BigDec
 	MinSpotPrice  osmomath.BigDec
 	MaxSpotPrice  sdk.Dec
-=======
-	ProvidedPrice osmomath.Dec
-	MinSpotPrice  osmomath.Dec
-	MaxSpotPrice  osmomath.Dec
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 }
 
 func (e PriceBoundError) Error() string {

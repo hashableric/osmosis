@@ -27,17 +27,12 @@ const (
 )
 
 var (
-<<<<<<< HEAD
-	MaxSpotPrice = sdk.MustNewDecFromStr("100000000000000000000000000000000000000")
+	MaxSpotPrice = osmomath.MustNewDecFromStr("100000000000000000000000000000000000000")
 	// TODO: remove when https://github.com/osmosis-labs/osmosis/issues/5726 is complete.
-	MinSpotPrice = sdk.MustNewDecFromStr("0.000000000001") // 10^-12
+	MinSpotPrice = osmomath.MustNewDecFromStr("0.000000000001") // 10^-12
 	// Note: this is the at launch min spot price that is getting lowered to 10^-30
-	MinSpotPriceBigDec = osmomath.BigDecFromSDKDec(MinSpotPrice)
-	MinSpotPriceV2     = osmomath.NewDecWithPrec(1, 30)
-=======
-	MaxSpotPrice       = osmomath.MustNewDecFromStr("100000000000000000000000000000000000000")
-	MinSpotPrice       = osmomath.MustNewDecFromStr("0.000000000001") // 10^-12
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+	MinSpotPriceBigDec = osmomath.BigDecFromDec(MinSpotPrice)
+	MinSpotPriceV2     = osmomath.NewBigDecWithPrec(1, 30)
 	MaxSqrtPrice       = osmomath.MustMonotonicSqrt(MaxSpotPrice)
 	MinSqrtPrice       = osmomath.MustMonotonicSqrt(MinSpotPrice)
 	MaxSqrtPriceBigDec = osmomath.BigDecFromDec(MaxSqrtPrice)

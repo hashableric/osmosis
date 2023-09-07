@@ -6,18 +6,11 @@ import (
 )
 
 var (
-<<<<<<< HEAD
-	sdkOneDec      = sdk.OneDec()
-	sdkNineDec     = sdk.NewDec(9)
-	sdkTenDec      = sdk.NewDec(10)
-	powersOfTen    []sdk.Dec
-	negPowersOfTen []sdk.Dec
-=======
 	sdkOneDec      = osmomath.OneDec()
+	sdkNineDec     = osmomath.NewDec(9)
 	sdkTenDec      = osmomath.NewDec(10)
 	powersOfTen    []osmomath.Dec
 	negPowersOfTen []osmomath.Dec
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
 	osmomathBigOneDec = osmomath.NewBigDec(1)
 	osmomathBigTenDec = osmomath.NewBigDec(10)
@@ -41,15 +34,9 @@ var (
 // -1 => (0.1, 10^(types.ExponentAtPriceOne - 1), 9 * (types.ExponentAtPriceOne - 1))
 type tickExpIndexData struct {
 	// if price < initialPrice, we are not in this exponent range.
-<<<<<<< HEAD
 	initialPrice osmomath.BigDec
 	// if price >= maxPrice, we are not in this exponent range.
 	maxPrice osmomath.BigDec
-=======
-	initialPrice osmomath.Dec
-	// if price >= maxPrice, we are not in this exponent range.
-	maxPrice osmomath.Dec
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	// TODO: Change to normal Dec, if min spot price increases.
 	// additive increment per tick here.
 	additiveIncrementPerTick osmomath.BigDec
@@ -63,7 +50,7 @@ func buildTickExpCache() {
 	// build positive indices first
 	maxPrice := osmomathBigOneDec
 	curExpIndex := int64(0)
-	for maxPrice.LT(osmomath.BigDecFromSDKDec(types.MaxSpotPrice)) {
+	for maxPrice.LT(osmomath.BigDecFromDec(types.MaxSpotPrice)) {
 		tickExpCache[curExpIndex] = &tickExpIndexData{
 			// price range 10^curExpIndex to 10^(curExpIndex + 1). (10, 100)
 			initialPrice:             osmomathBigTenDec.PowerInteger(uint64(curExpIndex)),
@@ -77,16 +64,11 @@ func buildTickExpCache() {
 
 	minPrice := osmomathBigOneDec
 	curExpIndex = -1
-	for minPrice.GT(osmomath.NewDecWithPrec(1, 30)) {
+	for minPrice.GT(osmomath.NewBigDecWithPrec(1, 30)) {
 		tickExpCache[curExpIndex] = &tickExpIndexData{
 			// price range 10^curExpIndex to 10^(curExpIndex + 1). (0.001, 0.01)
-<<<<<<< HEAD
 			initialPrice:             powTenBigDec(curExpIndex),
 			maxPrice:                 powTenBigDec(curExpIndex + 1),
-=======
-			initialPrice:             powTenBigDec(curExpIndex).Dec(),
-			maxPrice:                 powTenBigDec(curExpIndex + 1).Dec(),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 			additiveIncrementPerTick: powTenBigDec(types.ExponentAtPriceOne + curExpIndex),
 			initialTick:              geometricExponentIncrementDistanceInTicks * curExpIndex,
 		}

@@ -106,7 +106,6 @@ func (s *KeeperTestSuite) SetupTest() {
 
 	// Set default configuration for testing
 	s.balances = sdk.NewCoins(
-<<<<<<< HEAD
 		sdk.NewCoin(types.OsmosisDenomination, sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin("Atom", sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin("akash", sdk.NewInt(9000000000000000000)),
@@ -137,39 +136,6 @@ func (s *KeeperTestSuite) SetupTest() {
 		sdk.NewCoin("gamm/pool/1", sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin(apptesting.DefaultTransmuterDenomA, sdk.NewInt(9000000000000000000)),
 		sdk.NewCoin(apptesting.DefaultTransmuterDenomB, sdk.NewInt(9000000000000000000)),
-=======
-		sdk.NewCoin(types.OsmosisDenomination, osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("Atom", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("akash", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("bitcoin", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("canto", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ethereum", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("juno", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/0EF15DF2F02480ADE0BB6E85D9EBB5DAEA2836D3860E9F97F9AADE4F57A31AA0", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/BE1BB42D4BE3C30D50B68D7C41DB4DFCE9678E8EF8C539F6E6A9345048894FCC", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/D189335C6E4A68B513C10AB227BF1C1D38C746766278BA3EEB4FB14124F1D858", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/0E43EDE2E2A3AFA36D0CD38BDDC0B49FECA64FA426A82E102F304E430ECF46EE", osmomath.NewIntFromBigInt(big.NewInt(1).Mul(big.NewInt(9000000000000000000), big.NewInt(10000)))),
-		sdk.NewCoin("ibc/8242AD24008032E457D2E12D46588FD39FB54FB29680C6C7663D296B383C37C4", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("usdc", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("usdt", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("busd", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/A0CC0CF735BFB30E730C70019D4218A1244FF383503FF7579C9201AB93CA9293", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("test/1", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("test/2", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("usdx", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("usdy", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("epochOne", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("epochTwo", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("hookGamm", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("hookCL", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("hook", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("eth", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("gamm/pool/1", osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin(apptesting.DefaultTransmuterDenomA, osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin(apptesting.DefaultTransmuterDenomB, osmomath.NewInt(9000000000000000000)),
-		sdk.NewCoin("stake", osmomath.NewInt(9000000000000000000)),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	)
 	s.fundAllAccountsWith()
 	s.Commit()
@@ -951,94 +917,6 @@ func (s *KeeperTestSuite) setUpPools() {
 	}
 	s.App.ProtoRevKeeper.SetInfoByPoolType(s.Ctx, poolInfo)
 
-<<<<<<< HEAD
-=======
-	// Create a duplicate pool for testing
-	// Pool 52
-	s.createGAMMPool(
-		[]balancer.PoolAsset{
-			{
-				Token:  sdk.NewCoin("Atom", osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-			{
-				Token:  sdk.NewCoin(types.OsmosisDenomination, osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-		},
-		osmomath.NewDecWithPrec(2, 3),
-		osmomath.NewDecWithPrec(0, 2),
-	)
-
-	// Create a duplicate pool for testing
-	// Pool 53
-	s.createGAMMPool(
-		[]balancer.PoolAsset{
-			{
-				Token:  sdk.NewCoin("usdc", osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-			{
-				Token:  sdk.NewCoin(types.OsmosisDenomination, osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-		},
-		osmomath.NewDecWithPrec(2, 3),
-		osmomath.NewDecWithPrec(0, 2),
-	)
-
-	// Create a duplicate pool for testing
-	// Pool 54
-	s.createGAMMPool(
-		[]balancer.PoolAsset{
-			{
-				Token:  sdk.NewCoin("stake", osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-			{
-				Token:  sdk.NewCoin(types.OsmosisDenomination, osmomath.NewInt(10000)),
-				Weight: osmomath.NewInt(1),
-			},
-		},
-		osmomath.NewDecWithPrec(2, 3),
-		osmomath.NewDecWithPrec(0, 2),
-	)
-
-	// Create a duplicate pool for testing
-	// Pool 55
-	s.createGAMMPool(
-		[]balancer.PoolAsset{
-			{
-				Token:  sdk.NewCoin("stake", osmomath.NewInt(100000000)),
-				Weight: osmomath.NewInt(1),
-			},
-			{
-				Token:  sdk.NewCoin(types.OsmosisDenomination, osmomath.NewInt(1000000000)),
-				Weight: osmomath.NewInt(1),
-			},
-		},
-		osmomath.NewDecWithPrec(2, 3),
-		osmomath.NewDecWithPrec(0, 2),
-	)
-
-	// Create a duplicate pool for testing
-	// Pool 56
-	s.createGAMMPool(
-		[]balancer.PoolAsset{
-			{
-				Token:  sdk.NewCoin("bitcoin", osmomath.NewInt(100)),
-				Weight: osmomath.NewInt(1),
-			},
-			{
-				Token:  sdk.NewCoin("Atom", osmomath.NewInt(100)),
-				Weight: osmomath.NewInt(1),
-			},
-		},
-		osmomath.NewDecWithPrec(2, 3),
-		osmomath.NewDecWithPrec(0, 2),
-	)
-
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	// Create a concentrated liquidity pool for range testing
 	// Pool 52
 	// Create the CL pool

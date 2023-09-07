@@ -238,15 +238,11 @@ func (s *KeeperTestSuite) TestAnteHandle() {
 					},
 					{
 						Denom:  "ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7",
-						Amount: sdk.NewInt(218_149_058),
+						Amount: osmomath.NewInt(218_149_058),
 					},
 					{
 						Denom:  types.OsmosisDenomination,
-<<<<<<< HEAD
-						Amount: sdk.NewInt(56_609_900),
-=======
-						Amount: osmomath.NewInt(256_086_256),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+						Amount: osmomath.NewInt(56_609_900),
 					},
 				},
 				expectedPoolPoints: 33,
@@ -271,15 +267,11 @@ func (s *KeeperTestSuite) TestAnteHandle() {
 					},
 					{
 						Denom:  "ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7",
-						Amount: sdk.NewInt(218_149_058),
+						Amount: osmomath.NewInt(218_149_058),
 					},
 					{
 						Denom:  types.OsmosisDenomination,
-<<<<<<< HEAD
-						Amount: sdk.NewInt(56_609_900),
-=======
-						Amount: osmomath.NewInt(256_086_256),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+						Amount: osmomath.NewInt(56_609_900),
 					},
 				},
 				expectedPoolPoints: 33,
@@ -304,15 +296,11 @@ func (s *KeeperTestSuite) TestAnteHandle() {
 					},
 					{
 						Denom:  "ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7",
-						Amount: sdk.NewInt(218_149_058),
+						Amount: osmomath.NewInt(218_149_058),
 					},
 					{
 						Denom:  types.OsmosisDenomination,
-<<<<<<< HEAD
-						Amount: sdk.NewInt(56_609_900),
-=======
-						Amount: osmomath.NewInt(256_086_256),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+						Amount: osmomath.NewInt(56_609_900),
 					},
 				},
 				expectedPoolPoints: 33,
@@ -337,15 +325,11 @@ func (s *KeeperTestSuite) TestAnteHandle() {
 					},
 					{
 						Denom:  "ibc/0CD3A0285E1341859B5E86B6AB7682F023D03E97607CCC1DC95706411D866DF7",
-						Amount: sdk.NewInt(218_149_058),
+						Amount: osmomath.NewInt(218_149_058),
 					},
 					{
 						Denom:  types.OsmosisDenomination,
-<<<<<<< HEAD
-						Amount: sdk.NewInt(56_609_900),
-=======
-						Amount: osmomath.NewInt(256_086_256),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+						Amount: osmomath.NewInt(56_609_900),
 					},
 				},
 				expectedPoolPoints: 33,

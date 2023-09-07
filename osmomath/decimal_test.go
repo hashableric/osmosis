@@ -269,7 +269,7 @@ func (s *decimalTestSuite) TestSdkDecRoundUp() {
 	}
 }
 
-func (s *decimalTestSuite) TestBigDecFromSdkDec() {
+func (s *decimalTestSuite) TestBigDecFromDec() {
 	tests := []struct {
 		d        osmomath.Dec
 		want     osmomath.BigDec
@@ -294,7 +294,7 @@ func (s *decimalTestSuite) TestBigDecFromSdkDec() {
 	}
 }
 
-func (s *decimalTestSuite) TestBigDecFromSdkDecSlice() {
+func (s *decimalTestSuite) TestBigDecFromDecSlice() {
 	tests := []struct {
 		d        []osmomath.Dec
 		want     []osmomath.BigDec

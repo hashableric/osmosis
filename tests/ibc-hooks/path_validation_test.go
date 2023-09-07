@@ -35,13 +35,6 @@ func (suite *HooksTestSuite) SetupAndTestPFM(chainBId Chain, chainBName string, 
 	_, err := contractKeeper.Execute(ctx, registryAddr, sendFrom, []byte(msg), sdk.NewCoins(sdk.NewCoin(tokenBA, osmomath.NewInt(1))))
 	suite.Require().NoError(err)
 
-<<<<<<< HEAD
-=======
-	// Check that the funds were sent to the contract
-	intermediateBalance := osmosisApp.BankKeeper.GetBalance(suite.chainA.GetContext(), sendFrom, tokenBA)
-	suite.Require().Equal(balance.Amount, intermediateBalance.Amount.Add(osmomath.NewInt(1)))
-
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	forwarding = suite.chainA.QueryContractJson(&suite.Suite, registryAddr, []byte(pfm_msg))
 	suite.Require().False(forwarding.Bool())
 

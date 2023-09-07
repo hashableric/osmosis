@@ -20,14 +20,9 @@ var (
 	// Note we get spot price exponent by counting the number of digits in the max spot price and subtracting 1.
 	closestPriceBelowMaxPriceDefaultTickSpacing = types.MaxSpotPrice.Sub(osmomath.NewDec(10).PowerMut(uint64(len(types.MaxSpotPrice.TruncateInt().String()) - 1 - int(-types.ExponentAtPriceOne) - 1)))
 	// min tick + 10 ^ -expoentAtPriceOne
-<<<<<<< HEAD
-	closestTickAboveMinPriceDefaultTickSpacing = osmomath.NewInt(types.MinInitializedTick).Add(osmomath.NewInt(10).ToDec().PowerInteger(uint64(types.ExponentAtPriceOne * -1)).TruncateInt())
-=======
 	closestTickAboveMinPriceDefaultTickSpacing = osmomath.NewInt(types.MinInitializedTick).Add(osmomath.NewInt(10).ToLegacyDec().Power(uint64(types.ExponentAtPriceOne * -1)).TruncateInt())
-)
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
-	smallestBigDec = osmomath.SmallestDec()
+	smallestBigDec = osmomath.SmallestBigDec()
 	bigOneDec      = osmomath.OneDec()
 	bigTenDec      = osmomath.NewBigDec(10)
 )
@@ -387,21 +382,12 @@ func TestPriceToTick(t *testing.T) {
 			expectedError: fmt.Errorf("price must be greater than zero"),
 		},
 		"price is greater than max spot price": {
-<<<<<<< HEAD
-			price:         osmomath.BigDecFromSDKDec(types.MaxSpotPrice.Add(sdk.OneDec())),
-			expectedError: types.PriceBoundError{ProvidedPrice: osmomath.BigDecFromSDKDec(types.MaxSpotPrice.Add(sdk.OneDec())), MinSpotPrice: types.MinSpotPriceV2, MaxSpotPrice: types.MaxSpotPrice},
+			price:         osmomath.BigDecFromDec(types.MaxSpotPrice.Add(osmomath.OneDec())),
+			expectedError: types.PriceBoundError{ProvidedPrice: osmomath.BigDecFromDec(types.MaxSpotPrice.Add(osmomath.OneDec())), MinSpotPrice: types.MinSpotPriceV2, MaxSpotPrice: types.MaxSpotPrice},
 		},
 		"price is smaller than min spot price": {
 			price:         types.MinSpotPriceV2.Quo(bigTenDec),
 			expectedError: types.PriceBoundError{ProvidedPrice: types.MinSpotPriceV2.Quo(bigTenDec), MinSpotPrice: types.MinSpotPriceV2, MaxSpotPrice: types.MaxSpotPrice},
-=======
-			price:         osmomath.BigDecFromDec(types.MaxSpotPrice.Add(osmomath.OneDec())),
-			expectedError: types.PriceBoundError{ProvidedPrice: types.MaxSpotPrice.Add(osmomath.OneDec()), MinSpotPrice: types.MinSpotPrice, MaxSpotPrice: types.MaxSpotPrice},
-		},
-		"price is smaller than min spot price": {
-			price:         osmomath.BigDecFromDec(types.MinSpotPrice.Quo(osmomath.NewDec(10))),
-			expectedError: types.PriceBoundError{ProvidedPrice: types.MinSpotPrice.Quo(osmomath.NewDec(10)), MinSpotPrice: types.MinSpotPrice, MaxSpotPrice: types.MaxSpotPrice},
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 		},
 	}
 	for name, tc := range testCases {
@@ -452,11 +438,7 @@ func TestPriceToTickRoundDown(t *testing.T) {
 			tickExpected: -300,
 		},
 		"tick spacing 100, MinSpotPrice, MinTick": {
-<<<<<<< HEAD
 			price:        types.MinSpotPriceBigDec,
-=======
-			price:        osmomath.BigDecFromDec(types.MinSpotPrice),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 			tickSpacing:  defaultTickSpacing,
 			tickExpected: types.MinInitializedTick,
 		},
@@ -549,11 +531,7 @@ func TestTickToSqrtPricePriceToTick_InverseRelationship(t *testing.T) {
 			tickExpected: types.MaxTick - 1, // still max
 		},
 		"min spot price": {
-<<<<<<< HEAD
 			price:        types.MinSpotPriceBigDec,
-=======
-			price:        osmomath.BigDecFromDec(types.MinSpotPrice),
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 			tickExpected: types.MinInitializedTick,
 		},
 		"smallest + min price + tick": {
@@ -723,7 +701,7 @@ func TestCalculatePriceToTick(t *testing.T) {
 			expectedTickIndex: types.MinInitializedTick,
 		},
 		"MinSpotPrice V1 - 10^-19 -> MinCurrentTick": {
-			price:             types.MinSpotPriceBigDec.Sub(osmomath.NewDecWithPrec(1, 19)),
+			price:             types.MinSpotPriceBigDec.Sub(osmomath.NewBigDecWithPrec(1, 19)),
 			expectedTickIndex: types.MinCurrentTick,
 		},
 		"MinSpotPrice V2 -> MinInitializedTick V2": {
@@ -946,7 +924,7 @@ func TestSqrtPriceToTickRoundDownSpacing(t *testing.T) {
 // In the future, for price range [10^-30, 10^-12), we will use non-truncated BigDec
 // with 36 decimal TickToSqrt function.
 func TestCalculateSqrtPriceToTick_NearMinSpotPriceV1Bound(t *testing.T) {
-	sqrtPrice := osmomath.MustNewDecFromStr("0.000001000049998750999999999999999999")
+	sqrtPrice := osmomath.MustNewBigDecFromStr("0.000001000049998750999999999999999999")
 	_, err := math.CalculateSqrtPriceToTick(sqrtPrice)
 	require.NoError(t, err)
 }

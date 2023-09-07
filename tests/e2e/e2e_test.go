@@ -827,37 +827,22 @@ func (s *IntegrationTestSuite) ConcentratedLiquidity() {
 	address1position1liquidityBefore := positionsAddress1[0].Position.Liquidity
 	chainBNode.WithdrawPosition(address1, defaultLiquidityRemoval, positionsAddress1[0].Position.PositionId)
 	// assert
-<<<<<<< HEAD
 	positionsAddress1 = chainBNode.QueryConcentratedPositions(address1)
-	s.Require().Equal(address1position1liquidityBefore, positionsAddress1[0].Position.Liquidity.Add(sdk.MustNewDecFromStr(defaultLiquidityRemoval)))
-=======
-	positionsAddress1 = chainABNode.QueryConcentratedPositions(address1)
 	s.Require().Equal(address1position1liquidityBefore, positionsAddress1[0].Position.Liquidity.Add(osmomath.MustNewDecFromStr(defaultLiquidityRemoval)))
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
 	// address2: check removing some amount of liquidity
 	address2position1liquidityBefore := positionsAddress2[0].Position.Liquidity
 	chainBNode.WithdrawPosition(address2, defaultLiquidityRemoval, positionsAddress2[0].Position.PositionId)
 	// assert
-<<<<<<< HEAD
 	positionsAddress2 = chainBNode.QueryConcentratedPositions(address2)
-	s.Require().Equal(address2position1liquidityBefore, positionsAddress2[0].Position.Liquidity.Add(sdk.MustNewDecFromStr(defaultLiquidityRemoval)))
-=======
-	positionsAddress2 = chainABNode.QueryConcentratedPositions(address2)
 	s.Require().Equal(address2position1liquidityBefore, positionsAddress2[0].Position.Liquidity.Add(osmomath.MustNewDecFromStr(defaultLiquidityRemoval)))
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
 	// address3: check removing some amount of liquidity
 	address3position1liquidityBefore := positionsAddress3[0].Position.Liquidity
 	chainBNode.WithdrawPosition(address3, defaultLiquidityRemoval, positionsAddress3[0].Position.PositionId)
 	// assert
-<<<<<<< HEAD
 	positionsAddress3 = chainBNode.QueryConcentratedPositions(address3)
-	s.Require().Equal(address3position1liquidityBefore, positionsAddress3[0].Position.Liquidity.Add(sdk.MustNewDecFromStr(defaultLiquidityRemoval)))
-=======
-	positionsAddress3 = chainABNode.QueryConcentratedPositions(address3)
 	s.Require().Equal(address3position1liquidityBefore, positionsAddress3[0].Position.Liquidity.Add(osmomath.MustNewDecFromStr(defaultLiquidityRemoval)))
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
 	// Assert removing all liquidity
 	// address2: no more positions left
@@ -890,11 +875,7 @@ func (s *IntegrationTestSuite) ConcentratedLiquidity() {
 	newTickSpacing := cltypes.AuthorizedTickSpacing[indexOfCurrentTickSpacing-1]
 
 	// Run the tick spacing reduction proposal
-<<<<<<< HEAD
-	propNumber := chainBNode.SubmitTickSpacingReductionProposal(fmt.Sprintf("%d,%d", poolID, newTickSpacing), sdk.NewCoin(appparams.BaseCoinUnit, sdk.NewInt(config.InitialMinExpeditedDeposit)), true)
-=======
-	propNumber := chainABNode.SubmitTickSpacingReductionProposal(fmt.Sprintf("%d,%d", poolID, newTickSpacing), sdk.NewCoin(appparams.BaseCoinUnit, osmomath.NewInt(config.InitialMinExpeditedDeposit)), true)
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+	propNumber := chainBNode.SubmitTickSpacingReductionProposal(fmt.Sprintf("%d,%d", poolID, newTickSpacing), sdk.NewCoin(appparams.BaseCoinUnit, osmomath.NewInt(config.InitialMinExpeditedDeposit)), true)
 
 	chainBNode.DepositProposal(propNumber, true)
 	totalTimeChan := make(chan time.Duration, 1)

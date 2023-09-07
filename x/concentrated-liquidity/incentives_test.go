@@ -1045,7 +1045,6 @@ func (s *KeeperTestSuite) TestUpdateUptimeAccumulatorsToNow() {
 				s.Require().NoError(err)
 
 				// Add qualifying and non-qualifying liquidity to the pool
-<<<<<<< HEAD
 				qualifyingLiquidity, qualifyingBalancerLiquidity := sdk.ZeroDec(), sdk.ZeroDec()
 				if !tc.isInvalidBalancerPool {
 					depositedCoins := sdk.NewCoins(sdk.NewCoin(clPool.GetToken0(), testQualifyingDepositsOne), sdk.NewCoin(clPool.GetToken1(), testQualifyingDepositsOne))
@@ -1053,20 +1052,12 @@ func (s *KeeperTestSuite) TestUpdateUptimeAccumulatorsToNow() {
 					positionData, err := clKeeper.CreatePosition(s.Ctx, clPool.GetId(), testAddressOne, depositedCoins, sdk.ZeroInt(), sdk.ZeroInt(), clPool.GetCurrentTick()-100, clPool.GetCurrentTick()+100)
 					s.Require().NoError(err)
 					qualifyingLiquidity = positionData.Liquidity
-=======
-				qualifyingLiquidity := osmomath.ZeroDec()
-				depositedCoins := sdk.NewCoins(sdk.NewCoin(clPool.GetToken0(), testQualifyingDepositsOne), sdk.NewCoin(clPool.GetToken1(), testQualifyingDepositsOne))
-				s.FundAcc(testAddressOne, depositedCoins)
-				positionData, err := clKeeper.CreatePosition(s.Ctx, clPool.GetId(), testAddressOne, depositedCoins, osmomath.ZeroInt(), osmomath.ZeroInt(), clPool.GetCurrentTick()-100, clPool.GetCurrentTick()+100)
-				s.Require().NoError(err)
-				qualifyingLiquidity = positionData.Liquidity
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 
 					// If a canonical balancer pool exists, we add its respective shares to the qualifying amount as well.
 					clPool, err = clKeeper.GetPoolById(s.Ctx, clPool.GetId())
 					s.Require().NoError(err)
 					if tc.canonicalBalancerPoolAssets != nil {
-						qualifyingBalancerLiquidityPreDiscount := math.GetLiquidityFromAmounts(clPool.GetCurrentSqrtPrice(), osmomath.BigDecFromSDKDec(types.MinSqrtPrice), osmomath.BigDecFromSDKDec(types.MaxSqrtPrice), tc.canonicalBalancerPoolAssets[0].Token.Amount, tc.canonicalBalancerPoolAssets[1].Token.Amount)
+						qualifyingBalancerLiquidityPreDiscount := math.GetLiquidityFromAmounts(clPool.GetCurrentSqrtPrice(), osmomath.BigDecFromDec(types.MinSqrtPrice), osmomath.BigDecFromDec(types.MaxSqrtPrice), tc.canonicalBalancerPoolAssets[0].Token.Amount, tc.canonicalBalancerPoolAssets[1].Token.Amount)
 						qualifyingBalancerLiquidity = (sdk.OneDec().Sub(types.DefaultBalancerSharesDiscount)).Mul(qualifyingBalancerLiquidityPreDiscount)
 						qualifyingLiquidity = qualifyingLiquidity.Add(qualifyingBalancerLiquidity)
 
@@ -3597,9 +3588,9 @@ func (s *KeeperTestSuite) TestPrepareBalancerPoolAsFullRange() {
 				// Calculate balancer share amount for full range
 				updatedClPool, err := s.clk.GetPoolById(s.Ctx, clPool.GetId())
 				s.Require().NoError(err)
-				asset0BalancerAmount := tc.balancerPoolAssets[0].Token.Amount.ToDec().Mul(tc.portionOfSharesBonded).TruncateInt()
-				asset1BalancerAmount := tc.balancerPoolAssets[1].Token.Amount.ToDec().Mul(tc.portionOfSharesBonded).TruncateInt()
-				qualifyingSharesPreDiscount := math.GetLiquidityFromAmounts(updatedClPool.GetCurrentSqrtPrice(), osmomath.BigDecFromSDKDec(types.MinSqrtPrice), osmomath.BigDecFromSDKDec(types.MaxSqrtPrice), asset1BalancerAmount, asset0BalancerAmount)
+				asset0BalancerAmount := tc.balancerPoolAssets[0].Token.Amount.ToLegacyDec().Mul(tc.portionOfSharesBonded).TruncateInt()
+				asset1BalancerAmount := tc.balancerPoolAssets[1].Token.Amount.ToLegacyDec().Mul(tc.portionOfSharesBonded).TruncateInt()
+				qualifyingSharesPreDiscount := math.GetLiquidityFromAmounts(updatedClPool.GetCurrentSqrtPrice(), osmomath.BigDecFromDec(types.MinSqrtPrice), osmomath.BigDecFromDec(types.MaxSqrtPrice), asset1BalancerAmount, asset0BalancerAmount)
 				qualifyingShares := (sdk.OneDec().Sub(types.DefaultBalancerSharesDiscount)).Mul(qualifyingSharesPreDiscount)
 
 				// TODO: clean this check up (will likely require refactoring the whole test)

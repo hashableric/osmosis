@@ -242,16 +242,10 @@ func (p Pool) CalcActualAmounts(ctx sdk.Context, lowerTick, upperTick int64, liq
 	roundUp := liquidityDelta.IsPositive()
 
 	var (
-<<<<<<< HEAD
-		liquidityDeltaBigDec = osmomath.BigDecFromSDKDec(liquidityDelta)
-		actualAmountDenom0   osmomath.BigDec
-		actualAmountDenom1   osmomath.BigDec
-=======
 		liquidityDeltaBigDec = osmomath.BigDecFromDec(liquidityDelta)
 
 		actualAmountDenom0 osmomath.BigDec
 		actualAmountDenom1 osmomath.BigDec
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	)
 
 	if p.IsCurrentTickInRange(lowerTick, upperTick) {

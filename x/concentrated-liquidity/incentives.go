@@ -157,13 +157,13 @@ func (k Keeper) prepareBalancerPoolAsFullRange(ctx sdk.Context, clPoolId uint64,
 	}
 
 	// Calculate portion of Balancer pool shares that are bonded
-	bondedShareRatio := bondedShares.ToDec().Quo(totalBalancerPoolShares.ToDec())
+	bondedShareRatio := bondedShares.ToLegacyDec().Quo(totalBalancerPoolShares.ToLegacyDec())
 
 	// Calculate rough number of assets in Balancer pool that are bonded
 	balancerPoolLiquidity := sdk.NewCoins()
 	for _, liquidityToken := range totalBalancerPoolLiquidity {
 		// Rounding behavior is not critical here, but for simplicity we do bankers multiplication then truncate.
-		bondedLiquidityAmount := liquidityToken.Amount.ToDec().Mul(bondedShareRatio).TruncateInt()
+		bondedLiquidityAmount := liquidityToken.Amount.ToLegacyDec().Mul(bondedShareRatio).TruncateInt()
 		balancerPoolLiquidity = balancerPoolLiquidity.Add(sdk.NewCoin(liquidityToken.Denom, bondedLiquidityAmount))
 	}
 
@@ -193,7 +193,7 @@ func (k Keeper) prepareBalancerPoolAsFullRange(ctx sdk.Context, clPoolId uint64,
 	// Calculate the amount of liquidity the Balancer amounts qualify in the CL pool. Note that since we use the CL spot price, this is
 	// safe against prices drifting apart between the two pools (we take the lower bound on the qualifying liquidity in this case).
 	// The `sqrtPriceLowerTick` and `sqrtPriceUpperTick` fields are set to the appropriate values for a full range position.
-	qualifyingFullRangeSharesPreDiscount := math.GetLiquidityFromAmounts(clPool.GetCurrentSqrtPrice(), osmomath.BigDecFromSDKDec(types.MinSqrtPrice), osmomath.BigDecFromSDKDec(types.MaxSqrtPrice), asset0Amount, asset1Amount)
+	qualifyingFullRangeSharesPreDiscount := math.GetLiquidityFromAmounts(clPool.GetCurrentSqrtPrice(), osmomath.BigDecFromDec(types.MinSqrtPrice), osmomath.BigDecFromDec(types.MaxSqrtPrice), asset0Amount, asset1Amount)
 
 	// Get discount ratio from governance-set discount rate.
 	// Note that discount rate is the amount that is being discounted by (e.g. 0.05 for a 5% discount), while discount ratio is what
@@ -395,13 +395,8 @@ func (k Keeper) updateGivenPoolUptimeAccumulatorsToNow(ctx sdk.Context, pool typ
 	// uptime-related checks in forfeiting logic.
 
 	// If there is no share to be incentivized for the current uptime accumulator, we leave it unchanged
-<<<<<<< HEAD
 	qualifyingLiquidity := pool.GetLiquidity().Add(qualifyingBalancerShares)
-	if !qualifyingLiquidity.LT(sdk.OneDec()) {
-=======
-	qualifyingLiquidity := pool.GetLiquidity()
 	if !qualifyingLiquidity.LT(osmomath.OneDec()) {
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 		for uptimeIndex := range uptimeAccums {
 			// Get relevant uptime-level values
 			curUptimeDuration := types.SupportedUptimes[uptimeIndex]

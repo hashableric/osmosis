@@ -91,7 +91,7 @@ func TickToPrice(tickIndex int64) (osmomath.BigDec, error) {
 	// defense in depth, this logic would not be reached due to use having checked if given tick is in between
 	// min tick and max tick.
 	if price.GT(types.MaxSpotPrice) || price.LT(types.MinSpotPrice) {
-		return osmomath.BigDec{}, types.PriceBoundError{ProvidedPrice: osmomath.BigDecFromSDKDec(price), MinSpotPrice: types.MinSpotPriceBigDec, MaxSpotPrice: types.MaxSpotPrice}
+		return osmomath.BigDec{}, types.PriceBoundError{ProvidedPrice: osmomath.BigDecFromDec(price), MinSpotPrice: types.MinSpotPriceBigDec, MaxSpotPrice: types.MaxSpotPrice}
 	}
 	return osmomath.BigDecFromDec(price), nil
 }
@@ -155,14 +155,13 @@ func powTenBigDec(exponent int64) osmomath.BigDec {
 	return bigNegPowersOfTen[-exponent]
 }
 
-<<<<<<< HEAD
 // CalculatePriceToTick calculates tickIndex from price. Contrary to CalculatePriceToTickV1,
 // it uses BigDec in internal calculations
 func CalculatePriceToTick(price osmomath.BigDec) (tickIndex int64, err error) {
 	if price.IsNegative() {
 		return 0, fmt.Errorf("price must be greater than zero")
 	}
-	if price.GT(osmomath.BigDecFromSDKDec(types.MaxSpotPrice)) || price.LT(types.MinSpotPriceV2) {
+	if price.GT(osmomath.BigDecFromDec(types.MaxSpotPrice)) || price.LT(types.MinSpotPriceV2) {
 		return 0, types.PriceBoundError{ProvidedPrice: price, MinSpotPrice: types.MinSpotPriceV2, MaxSpotPrice: types.MaxSpotPrice}
 	}
 	if price.Equal(osmomathBigOneDec) {
@@ -175,22 +174,7 @@ func CalculatePriceToTick(price osmomath.BigDec) (tickIndex int64, err error) {
 		// TODO: implement efficient big decimal truncation.
 		// It is acceptable to truncate price as the minimum we support is
 		// 10**-12 which is above the smallest value of sdk.Dec.
-		price = osmomath.BigDecFromSDKDec(price.SDKDec())
-=======
-func CalculatePriceToTickDec(priceBigDec osmomath.BigDec) (tickIndex osmomath.Dec, err error) {
-	// It is acceptable to truncate price as the minimum we support is
-	// 10**-12 which is above the smallest value of osmomath.Dec.
-	price := priceBigDec.Dec()
-
-	if price.IsNegative() {
-		return osmomath.ZeroDec(), fmt.Errorf("price must be greater than zero")
-	}
-	if price.GT(types.MaxSpotPrice) || price.LT(types.MinSpotPrice) {
-		return osmomath.ZeroDec(), types.PriceBoundError{ProvidedPrice: price, MinSpotPrice: types.MinSpotPrice, MaxSpotPrice: types.MaxSpotPrice}
-	}
-	if price.Equal(sdkOneDec) {
-		return osmomath.ZeroDec(), nil
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
+		price = osmomath.BigDecFromDec(price.Dec())
 	}
 
 	// The approach here is to try determine which "geometric spacing" are we in.
@@ -218,26 +202,14 @@ func CalculatePriceToTickDec(priceBigDec osmomath.BigDec) (tickIndex osmomath.De
 	// We know were between (geoSpacing.initialPrice, geoSpacing.endPrice)
 	// The number of ticks that need to be filled by our current spacing is
 	// (price - geoSpacing.initialPrice) / geoSpacing.additiveIncrementPerTick
-<<<<<<< HEAD
 	priceInThisExponent := price.Sub(geoSpacing.initialPrice)
-=======
-	priceInThisExponent := osmomath.BigDecFromDec(price.Sub(geoSpacing.initialPrice))
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	ticksFilledByCurrentSpacing := priceInThisExponent.Quo(geoSpacing.additiveIncrementPerTick)
 	// we get the bucket index by:
 	// * taking the bucket index of the smallest price in this tick
 	// * adding to it the number of ticks filled by the current spacing
-<<<<<<< HEAD
 
 	tickIndex = ticksFilledByCurrentSpacing.TruncateInt64() + geoSpacing.initialTick
 
-=======
-	// We leave rounding of this to the caller
-	// (NOTE: You'd expect it to be number of ticks "completely" filled by the current spacing,
-	// which would be truncation. However price may have errors, hence it being callers job)
-	tickIndex = ticksFilledByCurrentSpacing.Dec()
-	tickIndex = tickIndex.Add(osmomath.NewDec(geoSpacing.initialTick))
->>>>>>> ca75f4c3 (refactor(deps): switch to cosmossdk.io/math from fork math (#6238))
 	return tickIndex, nil
 }
 
