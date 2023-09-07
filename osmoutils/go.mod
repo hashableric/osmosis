@@ -3,11 +3,12 @@ module github.com/osmosis-labs/osmosis/osmoutils
 go 1.20
 
 require (
-	github.com/cosmos/cosmos-sdk v0.47.4
+	cosmossdk.io/math v1.1.2
+	github.com/cosmos/cosmos-sdk v0.47.5
 	github.com/cosmos/iavl v0.19.5
 	github.com/cosmos/ibc-go/v4 v4.3.1
 	github.com/gogo/protobuf v1.3.3
-	github.com/osmosis-labs/osmosis/osmomath v0.0.6
+	github.com/osmosis-labs/osmosis/osmomath v0.0.7-0.20230907220438-2f6dd779bc6d
 	github.com/osmosis-labs/osmosis/v19 v19.0.0
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/pflag v1.0.5
@@ -19,7 +20,6 @@ require (
 
 require (
 	cosmossdk.io/errors v1.0.0 // indirect
-	cosmossdk.io/math v1.1.2 // indirect
 	filippo.io/edwards25519 v1.0.0-rc.1 // indirect
 	github.com/99designs/go-keychain v0.0.0-20191008050251-8e49817e8af4 // indirect
 	github.com/99designs/keyring v1.2.1 // indirect
@@ -92,7 +92,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
-	github.com/onsi/gomega v1.27.6 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect

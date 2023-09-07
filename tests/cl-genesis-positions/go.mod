@@ -3,9 +3,9 @@ module cl-get-positions-subgraph
 go 1.20
 
 require (
-	github.com/cosmos/cosmos-sdk v0.47.4
+	github.com/cosmos/cosmos-sdk v0.47.5
 	github.com/ignite/cli v0.23.0
-	github.com/osmosis-labs/osmosis/osmomath v0.0.6
+	github.com/osmosis-labs/osmosis/osmomath v0.0.7-0.20230907220438-2f6dd779bc6d
 	github.com/osmosis-labs/osmosis/osmoutils v0.0.6
 	github.com/osmosis-labs/osmosis/v19 v19.0.0
 	github.com/tendermint/tendermint v0.37.0-rc1
@@ -100,7 +100,6 @@ require (
 	github.com/minio/highwayhash v1.0.2 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mtibben/percent v0.2.1 // indirect
-	github.com/onsi/gomega v1.27.6 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/osmosis-labs/osmosis/x/epochs v0.0.2 // indirect
 	github.com/osmosis-labs/osmosis/x/ibc-hooks v0.0.8 // indirect
