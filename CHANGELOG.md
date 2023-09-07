@@ -69,8 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v18.0.0
 
-<<<<<<< HEAD
-=======
+
 ### Misc Improvements
 
 * [#6161](https://github.com/osmosis-labs/osmosis/pull/6161) Reduce CPU time of epochs
@@ -82,9 +81,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 * [#6034](https://github.com/osmosis-labs/osmosis/pull/6034) feat(spike): taker fee
-## v18.0.0
-
->>>>>>> 5c8fd80f (feat(spike): taker fee (#6034))
 Fixes mainnet bugs w/ incorrect accumulation sumtrees, and CL handling for a balancer pool with 0 bonded shares.
 
 ### Improvements
@@ -95,6 +91,10 @@ Fixes mainnet bugs w/ incorrect accumulation sumtrees, and CL handling for a bal
 
 ### API breaks
 
+* [#6238](https://github.com/osmosis-labs/osmosis/pull/6238) switch osmomath to sdkmath types and rename BigDec constructors to contain "Big" in the name.
+   * Note: with the update, the Dec and Int do not get initialized to zero values
+   by default in proto marhaling/unmarshaling. Instead, they get set to nil values.
+   * maxDecBitLen has changed by one bit so overflow panic can be triggerred sooner.
 * [#6071](https://github.com/osmosis-labs/osmosis/pull/6071) reduce number of returns for UpdatePosition and TicksToSqrtPrice functions
 
 ### Bug Fixes
@@ -110,7 +110,7 @@ Fixes mainnet bugs w/ incorrect accumulation sumtrees, and CL handling for a bal
 * [#5983](https://github.com/osmosis-labs/osmosis/pull/5983) refactor(CL): 6 return values in CL CreatePosition with a struct
 * [#6004](https://github.com/osmosis-labs/osmosis/pull/6004) reduce number of returns for creating full range position
 * [#6018](https://github.com/osmosis-labs/osmosis/pull/6018) golangci: add unused parameters linter
-* [#6033](https://github.com/osmosis-labs/osmosis/pull/6033) change tick API from sdk.Dec to osmomath.BigDec
+* [#6033](https://github.com/osmosis-labs/osmosis/pull/6033) change tick API from osmomath.Dec to osmomath.BigDec
 
 ### Features
 

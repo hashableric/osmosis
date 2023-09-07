@@ -1,4 +1,4 @@
-module github.com/osmosis-labs/osmosis/v19
+module github.com/osmosis-labs/osmosis/v18
 
 go 1.20
 
@@ -46,6 +46,7 @@ require (
 
 require (
 	4d63.com/gocheckcompilerdirectives v1.2.1 // indirect
+	cosmossdk.io/math v1.1.2 // indirect
 	github.com/4meepo/tagalign v1.3.2 // indirect
 	github.com/Abirdcfly/dupword v0.0.12 // indirect
 	github.com/Djarvur/go-err113 v0.1.0 // indirect
@@ -66,6 +67,7 @@ require (
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/gogo/gateway v1.1.0 // indirect
 	github.com/google/btree v1.1.2 // indirect
+	github.com/google/pprof v0.0.0-20210720184732-4bb14d4b1be1 // indirect
 	github.com/kkHAIKE/contextcheck v1.1.4 // indirect
 	github.com/maratori/testableexamples v1.0.0 // indirect
 	github.com/nunnatsa/ginkgolinter v0.13.3 // indirect
@@ -86,6 +88,7 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/goleak v1.1.12 // indirect
 	go.uber.org/zap v1.24.0 // indirect
+	golang.org/x/arch v0.3.0 // indirect
 	google.golang.org/genproto v0.0.0-20230726155614-23370e0ffb3e // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230706204954-ccb25ca9f130 // indirect
 )
@@ -328,8 +331,8 @@ replace (
 	github.com/CosmWasm/wasmvm => github.com/CosmWasm/wasmvm v1.2.3
 	// dragonberry
 	github.com/confio/ics23/go => github.com/cosmos/cosmos-sdk/ics23/go v0.8.0
-	// Our cosmos-sdk branch is:  https://github.com/osmosis-labs/cosmos-sdk, current branch: v16.x. Direct commit link: https://github.com/osmosis-labs/cosmos-sdk/commit/ed4eb883f2a65bd5343e9d2f6186060f45294cb2
-	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.0-rc1.0.20230703010110-ed4eb883f2a6
+	// Our cosmos-sdk branch is:  https://github.com/osmosis-labs/cosmos-sdk, current branch: v16.x. Direct commit link: https://github.com/osmosis-labs/cosmos-sdk/commit/c92a56002bede63d4a3d5d0af94443c8bcdc1095
+	github.com/cosmos/cosmos-sdk => github.com/osmosis-labs/cosmos-sdk v0.45.0-rc1.0.20230907202128-c92a56002bed
 
 	// N.B. v0.19.5 contains a breaking change to the IAVL API
 	github.com/cosmos/iavl v0.19.5 => github.com/cosmos/iavl v0.19.4
