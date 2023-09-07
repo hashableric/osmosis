@@ -42,13 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### API
-
-* [#6238](https://github.com/osmosis-labs/osmosis/pull/6238) switch osmomath to sdkmath types and rename BigDec constructors to contain "Big" in the name.
-   * Note: with the update, the Dec and Int do not get initialized to zero values
-   by default in proto marhaling/unmarshaling. Instead, they get set to nil values.
-   * maxDecBitLen has changed by one bit so overflow panic can be triggerred sooner.
-
 ### Bug Fixes
 
 * [#6334](https://github.com/osmosis-labs/osmosis/pull/6334) fix: enable taker fee cli
@@ -56,6 +49,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### API Breaks
 
 * [#6256](https://github.com/osmosis-labs/osmosis/pull/6256) Refactor CalcPriceToTick to operate on BigDec price to support new price range.
+* [#6238](https://github.com/osmosis-labs/osmosis/pull/6238) switch osmomath to sdkmath types and rename BigDec constructors to contain "Big" in the name.
+   * Note: with the update, the Dec and Int do not get initialized to zero values
+   by default in proto marhaling/unmarshaling. Instead, they get set to nil values.
+   * maxDecBitLen has changed by one bit so overflow panic can be triggerred sooner.
 
 ## v19.0.0
 
