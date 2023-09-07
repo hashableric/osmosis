@@ -6,7 +6,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.47.5
 	github.com/ignite/cli v0.23.0
 	github.com/osmosis-labs/osmosis/osmomath v0.0.7-0.20230907220438-2f6dd779bc6d
-	github.com/osmosis-labs/osmosis/osmoutils v0.0.6
+	github.com/osmosis-labs/osmosis/osmoutils v0.0.7-0.20230907220438-2f6dd779bc6d
 	github.com/osmosis-labs/osmosis/v19 v19.0.0
 	github.com/tendermint/tendermint v0.37.0-rc1
 )
@@ -30,7 +30,7 @@ require (
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
+	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/coinbase/rosetta-sdk-go v0.7.9 // indirect
 	github.com/confio/ics23/go v0.9.0 // indirect
 	github.com/cosmos/btcutil v1.0.5 // indirect
@@ -131,6 +131,7 @@ require (
 	github.com/tendermint/go-amino v0.16.0 // indirect
 	github.com/tendermint/tm-db v0.6.8-0.20220506192307-f628bb5dc95b // indirect
 	github.com/tidwall/btree v1.6.0 // indirect
+	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/zondax/hid v0.9.1 // indirect
 	github.com/zondax/ledger-go v0.14.1 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
