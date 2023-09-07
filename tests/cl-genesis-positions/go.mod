@@ -102,7 +102,7 @@ require (
 	github.com/mtibben/percent v0.2.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/osmosis-labs/osmosis/x/epochs v0.0.2 // indirect
-	github.com/osmosis-labs/osmosis/x/ibc-hooks v0.0.8 // indirect
+	github.com/osmosis-labs/osmosis/x/ibc-hooks v0.0.9-0.20230907221024-04d6a7555f0e // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
