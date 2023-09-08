@@ -35,8 +35,8 @@ var (
 	// DefaultMinTick to tyoes.MinInitializedTickV2 and
 	// DefaultMinCurrentTick to types.MinCurrentTickV2 upon
 	// completion of https://github.com/osmosis-labs/osmosis/issues/5726
-	DefaultMinTick, DefaultMaxTick       = types.MinInitializedTick, types.MaxTick
-	DefaultMinCurrentTick                = types.MinCurrentTick
+	DefaultMinTick, DefaultMaxTick       = types.MinInitializedTickV2, types.MaxTick
+	DefaultMinCurrentTick                = types.MinCurrentTickV2
 	DefaultLowerPrice                    = osmomath.NewDec(4545)
 	DefaultLowerTick                     = int64(30545000)
 	DefaultUpperPrice                    = osmomath.NewDec(5500)
@@ -545,7 +545,7 @@ func (s *KeeperTestSuite) swapToMinTickAndBack(spreadFactor osmomath.Dec, incent
 	actualSwappedInZeroForOne, tokenOut, _, err := s.App.ConcentratedLiquidityKeeper.SwapOutAmtGivenIn(
 		s.Ctx, swapper, pool,
 		coinZeroIn, pool.GetToken1(),
-		spreadFactor, osmomath.ZeroDec(),
+		spreadFactor, osmomath.ZeroBigDec(),
 	)
 	s.Require().NoError(err)
 
@@ -561,7 +561,7 @@ func (s *KeeperTestSuite) swapToMinTickAndBack(spreadFactor osmomath.Dec, incent
 	actualSwappedInOneForZero, inverseTokenOut, _, err := s.App.ConcentratedLiquidityKeeper.SwapOutAmtGivenIn(
 		s.Ctx, swapper, pool,
 		tokenOut, pool.GetToken0(),
-		spreadFactor, osmomath.ZeroDec(),
+		spreadFactor, osmomath.ZeroBigDec(),
 	)
 	s.Require().NoError(err)
 

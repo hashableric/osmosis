@@ -216,7 +216,7 @@ func (k Keeper) swapOutAmtGivenIn(
 	tokenIn sdk.Coin,
 	tokenOutDenom string,
 	spreadFactor osmomath.Dec,
-	priceLimit osmomath.Dec,
+	priceLimit osmomath.BigDec,
 ) (calcTokenIn, calcTokenOut sdk.Coin, poolUpdates PoolUpdates, err error) {
 	swapResult, poolUpdates, err := k.computeOutAmtGivenIn(ctx, pool.GetId(), tokenIn, tokenOutDenom, spreadFactor, priceLimit)
 	if err != nil {
@@ -247,7 +247,7 @@ func (k *Keeper) swapInAmtGivenOut(
 	desiredTokenOut sdk.Coin,
 	tokenInDenom string,
 	spreadFactor osmomath.Dec,
-	priceLimit osmomath.Dec,
+	priceLimit osmomath.BigDec,
 ) (calcTokenIn, calcTokenOut sdk.Coin, poolUpdates PoolUpdates, err error) {
 	swapResult, poolUpdates, err := k.computeInAmtGivenOut(ctx, desiredTokenOut, tokenInDenom, spreadFactor, priceLimit, pool.GetId())
 	if err != nil {
@@ -278,7 +278,7 @@ func (k Keeper) CalcOutAmtGivenIn(
 	spreadFactor osmomath.Dec,
 ) (tokenOut sdk.Coin, err error) {
 	cacheCtx, _ := ctx.CacheContext()
-	swapResult, _, err := k.computeOutAmtGivenIn(cacheCtx, poolI.GetId(), tokenIn, tokenOutDenom, spreadFactor, osmomath.ZeroDec())
+	swapResult, _, err := k.computeOutAmtGivenIn(cacheCtx, poolI.GetId(), tokenIn, tokenOutDenom, spreadFactor, osmomath.ZeroBigDec())
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -293,7 +293,7 @@ func (k Keeper) CalcInAmtGivenOut(
 	spreadFactor osmomath.Dec,
 ) (sdk.Coin, error) {
 	cacheCtx, _ := ctx.CacheContext()
-	swapResult, _, err := k.computeInAmtGivenOut(cacheCtx, tokenOut, tokenInDenom, spreadFactor, osmomath.ZeroDec(), poolI.GetId())
+	swapResult, _, err := k.computeInAmtGivenOut(cacheCtx, tokenOut, tokenInDenom, spreadFactor, osmomath.ZeroBigDec(), poolI.GetId())
 	if err != nil {
 		return sdk.Coin{}, err
 	}
@@ -354,7 +354,7 @@ func (k Keeper) computeOutAmtGivenIn(
 	tokenInMin sdk.Coin,
 	tokenOutDenom string,
 	spreadFactor osmomath.Dec,
-	priceLimit osmomath.Dec,
+	priceLimit osmomath.BigDec,
 ) (swapResult SwapResult, poolUpdates PoolUpdates, err error) {
 	p, spreadRewardAccumulator, uptimeAccums, err := k.swapSetup(ctx, poolId, tokenInMin.Denom, tokenOutDenom)
 	if err != nil {
@@ -481,7 +481,7 @@ func (k Keeper) computeInAmtGivenOut(
 	desiredTokenOut sdk.Coin,
 	tokenInDenom string,
 	spreadFactor osmomath.Dec,
-	priceLimit osmomath.Dec,
+	priceLimit osmomath.BigDec,
 	poolId uint64,
 ) (swapResult SwapResult, poolUpdates PoolUpdates, err error) {
 	p, spreadRewardAccumulator, uptimeAccums, err := k.swapSetup(ctx, poolId, tokenInDenom, desiredTokenOut.Denom)
@@ -513,6 +513,10 @@ func (k Keeper) computeInAmtGivenOut(
 		if err != nil {
 			return SwapResult{}, PoolUpdates{}, err
 		}
+
+		fmt.Printf("\nswap step begin\n")
+		fmt.Println("start tick", swapState.tick)
+		fmt.Println("nextInitializedTick", nextInitializedTick)
 
 		// Utilizing the bucket's liquidity and knowing the sqrt price target, we calculate the how much tokenOut we get from the tokenIn
 		// we also calculate the swap state's new computedSqrtPrice after this swap
@@ -584,8 +588,10 @@ func (k Keeper) computeInAmtGivenOut(
 	// Round amount out down to avoid over charging the pool.
 	amountOut := desiredTokenOut.Amount.ToLegacyDec().Sub(swapState.amountSpecifiedRemaining).TruncateInt()
 
-	ctx.Logger().Debug("final amount in", amountIn)
-	ctx.Logger().Debug("final amount out", amountOut)
+	fmt.Println("final amount in", amountIn)
+	fmt.Println("final amount out", amountOut)
+
+	fmt.Println("final tick", swapState.tick)
 
 	return SwapResult{
 		AmountIn:      amountIn,
@@ -595,12 +601,12 @@ func (k Keeper) computeInAmtGivenOut(
 }
 
 func emitSwapDebugLogs(ctx sdk.Context, swapState SwapState, reachedPrice osmomath.BigDec, amountIn, amountOut, spreadCharge osmomath.Dec) {
-	ctx.Logger().Debug("start sqrt price", swapState.sqrtPrice)
-	ctx.Logger().Debug("reached sqrt price", reachedPrice)
-	ctx.Logger().Debug("liquidity", swapState.liquidity)
-	ctx.Logger().Debug("amountIn", amountIn)
-	ctx.Logger().Debug("amountOut", amountOut)
-	ctx.Logger().Debug("spreadRewardChargeTotal", spreadCharge)
+	fmt.Println("start sqrt price", swapState.sqrtPrice)
+	fmt.Println("reached sqrt price", reachedPrice)
+	fmt.Println("liquidity", swapState.liquidity)
+	fmt.Println("amountIn", amountIn)
+	fmt.Println("amountOut", amountOut)
+	fmt.Println("spreadRewardChargeTotal", spreadCharge)
 }
 
 // logic for crossing a tick during a swap
@@ -734,7 +740,7 @@ func checkDenomValidity(inDenom, outDenom, asset0, asset1 string) error {
 	return nil
 }
 
-func (k Keeper) setupSwapStrategy(p types.ConcentratedPoolExtension, spreadFactor osmomath.Dec, tokenInDenom string, priceLimit osmomath.Dec) (strategy swapstrategy.SwapStrategy, sqrtPriceLimit osmomath.BigDec, err error) {
+func (k Keeper) setupSwapStrategy(p types.ConcentratedPoolExtension, spreadFactor osmomath.Dec, tokenInDenom string, priceLimit osmomath.BigDec) (strategy swapstrategy.SwapStrategy, sqrtPriceLimit osmomath.BigDec, err error) {
 	zeroForOne := getZeroForOne(tokenInDenom, p.GetToken0())
 
 	// take provided price limit and turn this into a sqrt price limit since formulas use sqrtPrice
@@ -838,7 +844,7 @@ func (k Keeper) ComputeMaxInAmtGivenMaxTicksCrossed(
 	}
 
 	// Setup the swap strategy
-	swapStrategy, _, err := k.setupSwapStrategy(p, p.GetSpreadFactor(cacheCtx), tokenInDenom, osmomath.ZeroDec())
+	swapStrategy, _, err := k.setupSwapStrategy(p, p.GetSpreadFactor(cacheCtx), tokenInDenom, osmomath.ZeroBigDec())
 	if err != nil {
 		return sdk.Coin{}, sdk.Coin{}, err
 	}
